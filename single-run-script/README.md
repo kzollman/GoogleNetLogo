@@ -19,9 +19,9 @@ There is a recovery script designed to help you recover from an interrupted simu
 In the second section, change the three variables there to match what fits you
 1. Set NLLOCALFILE to match the complete path of the .tar.gz for the Linux version of NetLogo stored on your local machine.
 2. Set THREADS to match how large a machine you would like.  The script always boots a highcpu machine, but with the number of cores you choose.  
-.* NOTE 1: The acceptable values for this are 1, 2, 4, 8, 16, 32, 64, and 96
-.* NOTE 2: Depending on how many cores you chose, and features of your simulation, you may need to have NetLogo allocate more memory than it does by default. To do this you will need to edit the netlogo-headless.sh script inside of the NetLogo .tar.gz archive on your local machine.  There are many instructions for how to do this found on google.
-.* In my experience NetLogo does not seem to be able to do more than 32 cores efficiently.  The usage on 64 and 96 cores was very low. Since it seemeed like I was paying for unused cores, I've been sticking with 32 core machines.  Your milage may vary.
+  * NOTE 1: The acceptable values for this are 1, 2, 4, 8, 16, 32, 64, and 96
+  * NOTE 2: Depending on how many cores you chose, and features of your simulation, you may need to have NetLogo allocate more memory than it does by default. To do this you will need to edit the netlogo-headless.sh script inside of the NetLogo .tar.gz archive on your local machine.  There are many instructions for how to do this found on google.
+  * In my experience NetLogo does not seem to be able to do more than 32 cores efficiently.  The usage on 64 and 96 cores was very low. Since it seemeed like I was paying for unused cores, I've been sticking with 32 core machines.  Your milage may vary.
 3. Set GZONE to the appropriate Google region. Here is a guide https://cloud.google.com/compute/docs/regions-zones/
 
 

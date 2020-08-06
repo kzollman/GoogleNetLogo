@@ -32,7 +32,9 @@ BSEXP=(experiment)
 ###########################################################################################
 
 
-# Location of the Netlogo tarball that you want to uplaod
+# Location of the Netlogo tarball that you want to upload
+# If you change this to a newer version, you should also update
+# the remote command down in the script
 NLLOCALFILE=NetLogo-6.1.0-64-zollman-local.tgz 
 
 # Threads. This determines the size of the google machine you request
@@ -95,6 +97,9 @@ do
 	STDERRFILE=$EXPERIMENT-STDERR
 	DONEFILE=$EXPERIMENT-done
 	SCRIPTNAME=run-$EXPERIMENT.sh
+
+	# Modify this this next line if you are using a newer version
+	# of NetLogo
 	NLCOMMAND="NetLogo\\\\ 6.1.0/netlogo-headless.sh --model $NLMODELNAME --experiment $EXPERIMENT --threads $THREADS --table $OUTFILE"
 	ENDCOMMAND="touch $DONEFILE"	
 

@@ -15,11 +15,11 @@
 
 # Experiment you want to recover
 
-EXPERIMENT=experiment
+EXPERIMENT=SearchBetaAssignCommonA
 
 # ID for machine name
 
-ID=26489
+ID=23626
 
 ###########################################################################################
 # Change only first time you run it
@@ -38,23 +38,26 @@ GMACHINENAME=netlogo-vm-$ID
 OUTFILE=$EXPERIMENT-table.csv
 DONEFILE=$EXPERIMENT-done
 
-while true; do
-	LINENUM=$(gcloud compute ssh $GMACHINENAME --zone="$GZONE" --command "wc -l < $OUTFILE")
-	FINISHED=$(( $LINENUM - 7 ))
-	if (($FINISHED < 0)); then
-		FINISHED=0
-	fi
-	printf "\r\033[1mFinished $FINISHED observationsg\033[0m"
-	sleep 1m
-	gcloud compute ssh $GMACHINENAME --zone="$GZONE" --command "test -e $DONEFILE > /dev/null 2>&1" && break
-done
+if ! gcloud compute ssh $GMACHINENAME --zone="$GZONE" --command "test -e $DONEFILE > /dev/null 2>&1"; then
+	printf "\033[1mExperiment Still Running, monitoring...\033[0m\n"
+	while true; do
+		LINENUM=$(gcloud compute ssh $GMACHINENAME --zone="$GZONE" --command "wc -l < $OUTFILE")
+		FINISHED=$(( $LINENUM - 7 ))
+		if (($FINISHED < 0)); then
+			FINISHED=0
+		fi
+		printf "\r\033[1mFinished $FINISHED observations\033[0m"
+		sleep 1m
+		gcloud compute ssh $GMACHINENAME --zone="$GZONE" --command "test -e $DONEFILE > /dev/null 2>&1" && break
+	done
+fi
 
 # Copy the output file back here
-	
+
 printf "\n\033[1mExperiment $EXPERIMENT finished. Copying results\033[0m"
 gcloud compute scp $GMACHINENAME:$OUTFILE . --zone="$GZONE" --scp-flag=-C 
 
-printf "\033[1mFinished resumed experiment, $EXPERIMENT. Shutting down machine $GMACHINENAME\033[0m"
+printf "\033[1mFinished resumed experiment, $EXPERIMENT. Shutting down machine $GMACHINENAME\033[0m\n"
 # And shut down the virtual machine
 gcloud compute instances delete "$GMACHINENAME" --zone="$GZONE" -q 
 

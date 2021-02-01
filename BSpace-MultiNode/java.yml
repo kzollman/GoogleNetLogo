@@ -1,0 +1,12 @@
+# java.yml
+---
+
+- name: Local config for java
+  hosts: all
+  strategy: linear
+  tasks:
+    - name: Install Java
+      package:
+        name: default-jre
+        state: present
+

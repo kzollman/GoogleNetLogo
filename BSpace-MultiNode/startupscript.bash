@@ -22,7 +22,7 @@ BSEXP=experiment
 # Change only first time you run it
 ###########################################################################################
 
-NLLOCALPATH=$(pwd)
+NLLOCALPATH=..
 NLLOCALFILE=NetLogo-6.2.0-64.tgz
 ELASTIBIN=/home/kzollman/.local/bin/elasticluster
 ELASTISTORAGE=/home/kzollman/.elasticluster/storage
@@ -45,6 +45,8 @@ SLURMJOBPATH=$PWD/RemoteScripts
 
 SCHEDFILE=scheduler.bash
 SCHEDPATH=$PWD/RemoteScripts
+
+set -e
 
 $ELASTIBIN -c $CONFILE start slurm
 

@@ -698,7 +698,7 @@ false
 Polygon -7500403 true true 270 75 225 30 30 225 75 270
 Polygon -7500403 true true 30 75 75 30 270 225 225 270
 @#$#@#$#@
-NetLogo 6.0.1
+NetLogo 6.1.1
 @#$#@#$#@
 @#$#@#$#@
 @#$#@#$#@
@@ -712,7 +712,9 @@ NetLogo 6.0.1
       <value value="95"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="%-similar-wanted">
+      <value value="20"/>
       <value value="30"/>
+      <value value="40"/>
     </enumeratedValueSet>
     <enumeratedValueSet variable="visualization">
       <value value="&quot;square-x&quot;"/>

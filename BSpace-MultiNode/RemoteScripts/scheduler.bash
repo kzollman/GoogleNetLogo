@@ -39,6 +39,7 @@ while true; do
 	if [ $JOBSLEFT -eq 0 ]; then 
 		break;
 	fi
+	sleep 30s
 done
 
 echo -e "\nCleaning up output files"

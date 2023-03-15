@@ -35,7 +35,8 @@ BSEXP=(experiment)
 # Location of the Netlogo tarball that you want to upload
 # If you change this to a newer version, you should also update
 # the remote command down in the script
-NLLOCALFILE=NetLogo-6.1.0-64-zollman-local.tgz 
+NLLOCALPATH=..
+NLLOCALFILE=NetLogo-6.2.0-64.tgz
 
 # Threads. This determines the size of the google machine you request
 THREADS=32
@@ -52,20 +53,20 @@ GZONE=us-east1-c
 # have multiple instances of the script running and they don't bump into each other
 ID=$RANDOM
 GMACHINENAME=netlogo-vm-$ID
-GMACHINETYPE=n1-highcpu-$THREADS
+GMACHINETYPE=e2-highcpu-$THREADS
 
 # Full path to model
 NLMODELLOCAL=$NLMODELPATH/$NLMODELNAME
 
 # Image for the gcompute machine
-GIMAGE=https://www.googleapis.com/compute/v1/projects/debian-cloud/global/images/family/debian-9
-
+GIMAGE=debian-11
+GIMAGEPROJ=debian-cloud
 set -e 
 
 
 # Create the image
 printf "\033[1mStarting google compute instance $GMACHINENAME\033[0m\n"
-gcloud compute instances create "$GMACHINENAME" --machine-type="$GMACHINETYPE" --zone="$GZONE" --image-family="$GIMAGE" 
+gcloud compute instances create "$GMACHINENAME" --machine-type="$GMACHINETYPE" --zone="$GZONE" --image-family="$GIMAGE"  --image-project="$GIMAGEPROJ"
 printf "\033[1mMachine created. Sleeping for 30s\033[0m\n"
 
 # sleep for 30 seconds to make sure the machine is up and running
@@ -77,7 +78,7 @@ gcloud compute ssh "$GMACHINENAME" --zone="$GZONE" --command "sudo apt-get updat
 
 printf "\033[1mCopying netlogo and model file\033[0m\n"
 # Copy the local version of netlogo there, and uncompress it
-gcloud compute scp "$NLLOCALFILE" "$GMACHINENAME": --zone="$GZONE"
+gcloud compute scp "$NLLOCALPATH/$NLLOCALFILE" "$GMACHINENAME": --zone="$GZONE"
 gcloud compute ssh "$GMACHINENAME" --zone="$GZONE" --command "tar zxf $NLLOCALFILE" 
 
 # Copy the model
